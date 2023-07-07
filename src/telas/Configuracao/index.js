@@ -13,7 +13,7 @@ export default function Configuracao({ navigation }) {
       <Text style={estilo.titulo}>Configuração</Text>
 
       <View style={estilo.inputArea}>
-      <Text style={estilo.subtitulo}>Tema: {temaAtual}</Text>
+      <Text style={estilo.subtitulo}>Tema Atual: {temaAtual.charAt(0).toUpperCase() + temaAtual.slice(1)}</Text>
       <Switch
         onValueChange={() => temaAtual === 'escuro' ? setTemaAtual('claro') : setTemaAtual('escuro')}
         value={temaAtual === 'escuro' ? true : false}
