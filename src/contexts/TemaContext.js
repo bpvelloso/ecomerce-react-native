@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { claro, escuro, tema } from "../estilosGlobais";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const TemaContext = createContext({})
 
@@ -12,10 +13,24 @@ export function TemaProvider({children}) {
         'claro': claro   
     }
 
+    useEffect(() => {
+        async function fetchData(){
+            const temaSalvo = await AsyncStorage.getItem('@tema')
+            if(temaSalvo) {
+                setTemaAtual(temaSalvo)
+            }
+        }
+        fetchData()
+    }, [])
+    async function salvarTemaDispositivo(tema) {
+        await AsyncStorage.setItem('@tema',tema)
+        setTemaAtual(tema)
+    }
+
     return(
         <TemaContext.Provider value={{
                     temaAtual, 
-                    setTemaAtual,
+                    salvarTemaDispositivo,
                     temaEscolhido: temas[temaAtual]
                 }
             }>
