@@ -7,12 +7,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/Feather';
 import { useContext } from 'react';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import { TemaContext } from '../../contexts/TemaContext';
+import { AutenticacaoContext } from '../../contexts/AutenticacaoContext';
+import { ProdutosContext } from '../../contexts/ProdutosContext';
 
 
 export default function Principal({navigation}) {
-  const ultimosVistos = []
-
+  
   const {temaEscolhido}=useContext(TemaContext)
+  const {usuario}=useContext(AutenticacaoContext)
+  const {quantidade, carrinho, ultimosVistos, viuProduto}=useContext(ProdutosContext)
   
   const estilo = estilos(temaEscolhido)
   
@@ -20,13 +23,13 @@ export default function Principal({navigation}) {
     <View style={estilo.container}>
       <StatusBar />
       <View style={estilo.tituloArea}>
-        <Text style={estilo.titulo}>Olá, NOME</Text>
+        <Text style={estilo.titulo}>Olá, {usuario?.nome}</Text>
         <View style={estilo.carrinhoArea}>
           <TouchableOpacity onPress={() => {}}>
             <Feather name="shopping-cart" size={30} color="#fff" style={estilo.carrinhoIcon} />
           </TouchableOpacity>
           <View style={estilo.carrinhoQuantidadeArea}>
-            <Text style={estilo.carrinhoQuantidade}>0</Text>  
+            <Text style={estilo.carrinhoQuantidade}>{quantidade}</Text>  
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('Configurações')} style={estilo.iconArea} >
             <MaterialCommunityIcons name="settings" size={30} color="#fff" style={estilo.icon} />
